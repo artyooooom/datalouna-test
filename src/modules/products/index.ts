@@ -9,10 +9,9 @@ export const auth = new Elysia({ prefix: '/products' })
         async () => {
             return [
                 {
-                    id: 3,
                     name: '',
-                    min_price: '',
-                    min_price_tradeable: '',
+                    min_price: 0,
+                    min_price_tradeable: 0,
                 },
             ];
         },
@@ -25,15 +24,8 @@ export const auth = new Elysia({ prefix: '/products' })
     .get(
         '/prices',
         async () => {
-
-            return [
-                {
-                    id: 3,
-                    name: '',
-                    min_price: '',
-                    min_price_tradeable: '',
-                },
-            ];
+            const prices = await Product.getPrices()
+            return prices;
         },
         {
             response: {

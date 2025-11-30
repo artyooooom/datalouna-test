@@ -1,14 +1,15 @@
 import { t } from 'elysia';
 
 export namespace ProductModel {
-    export const productsResponse = t.Array(
-        t.Object({
-            id: t.Number(),
-            name: t.String(),
-            min_price: t.String(), // using strings to prevent num inaccuracies
-            min_price_tradeable: t.String(), // using strings to prevent num inaccuracies
-        }),
-    );
+	export const productItemResponse = t.Object({
+		name: t.String(),
+		min_price: t.Optional(t.Number()),
+		min_price_tradeable: t.Optional(t.Number()),
+	})
 
-    export type productsResponse = typeof productsResponse.static;
+	export type productItemResponse = typeof productItemResponse.static;
+
+	export const productsResponse = t.Array(productItemResponse);
+
+	export type productsResponse = typeof productsResponse.static;
 }
