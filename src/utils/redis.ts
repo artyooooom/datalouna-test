@@ -20,10 +20,10 @@ export async function initializeRedisClient(): Promise<RedisClientType> {
 
     redisClient = RedisClientConfig;
 
-    return RedisClientConfig
+    return RedisClientConfig;
 }
 
-export const PRICES_CACHE_KEY = 'prices'
+export const PRICES_CACHE_KEY = 'prices';
 export const DEFAULT_TTL_SECONDS = 5 * 60;
 
 export let redisClient: RedisClientType | null = null;

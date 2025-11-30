@@ -2,18 +2,14 @@ import { Elysia } from 'elysia';
 
 import { Product } from './service';
 import { ProductModel } from './model';
+import { AuthGuard, JwtUserPayload } from '../../plugins/auth-guard';
 
-export const auth = new Elysia({ prefix: '/products' })
+export const products = new Elysia({ prefix: '/products' })
     .get(
         '/',
         async () => {
-            return [
-                {
-                    name: '',
-                    min_price: 0,
-                    min_price_tradeable: 0,
-                },
-            ];
+            const products = await Product.getProducts();
+            return products;
         },
         {
             response: {
@@ -24,12 +20,25 @@ export const auth = new Elysia({ prefix: '/products' })
     .get(
         '/prices',
         async () => {
-            const prices = await Product.getPrices()
+            const prices = await Product.getPrices();
             return prices;
         },
         {
             response: {
-                200: ProductModel.productsResponse,
+                200: ProductModel.pricesResponse,
+            },
+        },
+    )
+    .use(AuthGuard)
+    .post(
+        '/:id',
+        async ({ user, params: { id } }) => {
+            const updatedUserBalance = await Product.purchase(user.userId, Number(id));
+            return updatedUserBalance;
+        },
+        {
+            response: {
+                200: ProductModel.purchaseResponse,
             },
         },
     );
