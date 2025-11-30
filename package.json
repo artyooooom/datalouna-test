@@ -1,0 +1,26 @@
+{
+  "name": "app",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc src/index.ts --outDir dist",
+    "start": "NODE_ENV=production node dist/index.js"
+  },
+  "dependencies": {
+    "@elysiajs/node": "^1.4.2",
+    "axios": "^1.13.2",
+    "elysia": "latest",
+    "pino": "^10.1.0",
+    "postgres": "^3.4.7",
+    "redis": "^5.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "prettier": "^3.7.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "module": "src/index.js"
+}
