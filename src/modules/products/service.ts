@@ -133,4 +133,29 @@ export abstract class Product {
 
         return pricesResponse;
     }
+
+    static async getUserPurchases(userId: number): Promise<ProductModel.UserPurchasesResponse> {
+        try {
+            const rows = await sql<ProductModel.UserPurchaseItem[]>`
+                SELECT
+                    p.id,
+                    p.product_id,
+                    pr.name AS product_name,
+                    pr.price,
+                    p.created_at
+                FROM purchases p
+                JOIN products pr ON pr.id = p.product_id
+                WHERE p.user_id = ${userId}
+                ORDER BY p.created_at DESC;
+            `;
+
+            return rows;
+        } catch (err) {
+            logger.error({
+                method: this.getUserPurchases.name,
+                err,
+            });
+            throw new Error('Failed to fetch user purchases');
+        }
+    }
 }

@@ -30,6 +30,16 @@ export const products = new Elysia({ prefix: '/products' })
         },
     )
     .use(AuthGuard)
+    .get(
+        '/me',
+        async ({ user }) => {
+            const purchases = await Product.getUserPurchases(user.userId);
+            return purchases;
+        },
+        {
+            response: ProductModel.UserPurchasesResponse,
+        },
+    )
     .post(
         '/:id',
         async ({ user, params: { id } }) => {

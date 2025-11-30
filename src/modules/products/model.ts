@@ -30,4 +30,17 @@ export namespace ProductModel {
     });
 
     export type purchaseResponse = typeof purchaseResponse.static;
+
+    export const UserPurchaseItem = t.Object({
+        id: t.Number(),
+        product_id: t.Number(),
+        product_name: t.String(),
+        price: t.String(),
+        created_at: t.Date(),
+    });
+
+    export type UserPurchaseItem = typeof UserPurchaseItem.static;
+
+    export const UserPurchasesResponse = t.Array(UserPurchaseItem);
+    export type UserPurchasesResponse = typeof UserPurchasesResponse.static;
 }
